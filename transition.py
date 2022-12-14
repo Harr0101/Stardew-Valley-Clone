@@ -18,7 +18,7 @@ class Transition():
         if self.color <= 0:
             self.speed *= -1
             self.color = 0
-            self.reset()
+            self.reset(sleeping = True)
 
         if self.color > 255:
             self.color = 255

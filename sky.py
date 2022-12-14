@@ -8,16 +8,32 @@ class Sky():
     def __init__(self):
         self.display_surface = pygame.display.get_surface()
         self.full_surf = pygame.surface.Surface((SCREEN_WIDTH,SCREEN_HEIGHT))
-        self.start_color = [255,255,255]
-        self.current_color = self.start_color.copy()
-        self.end_color = (38,101,189)
+        self.day_color = (255,255,255)
+        self.current_color = list(self.day_color)
+        self.night_color = (38,101,189)
+        
 
-    def display(self, dt):
-        for index,value in enumerate(self.end_color):
-            if self.current_color[index] > value:
-                self.current_color[index] -=2 * dt
+    def display(self, time):
+        if 6 < time < 17:
+            self.full_surf.fill(self.day_color)
 
-        self.full_surf.fill(self.current_color)
+        elif 17 < time < 19:
+            for index,value in enumerate(self.night_color):
+                difference = self.night_color[index] - self.day_color[index]
+                scale = (time - 17) /2
+                self.current_color[index] = self.day_color[index] + difference * scale
+            self.full_surf.fill(self.current_color)
+        
+        elif 5 < time < 6:
+            for index,value in enumerate(self.night_color):
+                difference = self.day_color[index] - self.night_color[index]
+                scale = (time - 5) 
+                self.current_color[index] = difference * scale + self.night_color[index]
+            self.full_surf.fill(self.current_color)
+
+        else:
+            self.full_surf.fill(self.night_color)
+
         self.display_surface.blit(self.full_surf, (0,0),special_flags=pygame.BLEND_RGB_MULT)
 
 

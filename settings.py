@@ -29,7 +29,8 @@ LAYERS = {
     'main': 7,
     'house top': 8,
     'fruit': 9,
-    'rain drops':10
+    'rain drops':10,
+    'overlay': 11
 }
 
 APPLE_POS = {

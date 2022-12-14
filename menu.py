@@ -28,7 +28,6 @@ class Menu():
         self.buy_text = self.font.render('BUY',False,'Black')
         self.sell_text = self.font.render('SELL',False,'Black')
 
-
     def display_money(self):
         text_surf = self.font.render(f"${self.player.money}",False,'Black')
         text_rect = text_surf.get_rect(midbottom = (SCREEN_WIDTH/2,SCREEN_HEIGHT - 20))

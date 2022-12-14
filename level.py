@@ -44,6 +44,10 @@ class Level():
         self.music.set_volume(0.1)
         self.music.play(loops = -1)
 
+        # Time
+        self.time = Time(self)
+        
+
     def setup(self):
         tmx_data = load_pygame('data/map.tmx')
 
@@ -111,7 +115,7 @@ class Level():
     def toggle_shop(self):
         self.shop_active = not self.shop_active
 
-    def reset(self):
+    def reset(self,sleeping = False):
         # Plants
         self.soil_layer.update_plants()
 
@@ -124,14 +128,14 @@ class Level():
         # Rain
         self.raining = randint(0,10) > 7
 
+        if sleeping:
+            self.time.time = 6
+
         # Soil
         self.soil_layer.remove_water()
         self.soil_layer.raining = self.raining
         if self.raining:
             self.soil_layer.water_all()
-
-        # sky
-        self.sky.current_color = self.sky.start_color.copy()
 
     def plant_collision(self):
         if self.soil_layer.plant_sprites:
@@ -156,10 +160,15 @@ class Level():
             self.plant_collision()
         
         # Weather
-        self.overlay.display()
+        self.overlay.display(dt)
         if self.raining and not self.shop_active:
             self.rain.update()
-        self.sky.display(dt)
+        
+
+        # Time
+        self.time.update(dt)
+        self.display_surface.blit(self.time.image,self.time.rect)
+        self.sky.display(self.time.time)
 
         # Transition overlay
         if self.player.sleep:
@@ -183,3 +192,23 @@ class CameraGroup(pygame.sprite.Group):
                     offset_rect.center -= self.offset
                     self.display_surface.blit(sprite.image,offset_rect)
                     
+
+class Time():
+    def __init__(self,level):
+        self.time = 4.8
+        self.font = pygame.font.SysFont('Times New Roman',18)
+        self.z = LAYERS['overlay']
+        self.level = level
+
+    def update(self,dt):
+        self.time += dt/12.5
+        if self.time >= 24:
+            self.time -= 24
+            self.level.reset()
+
+        hours = int(self.time)
+        minutes = str(int((self.time-hours)*60))
+        if len(minutes) == 1:
+            minutes = '0' + minutes
+        self.image = self.font.render(f"{hours}:{minutes}",True,'black')
+        self.rect = self.image.get_rect(topleft = (20,20))
