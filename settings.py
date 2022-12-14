@@ -38,19 +38,33 @@ APPLE_POS = {
     'Large': [(30,24), (60,65), (50,50),(16,40),(45,50),(42,70)]
 }
 
+PLANT_TYPES = ['corn','tomato']
+
+plants = open('plants.txt','r')
+
 GROW_SPEED = {
-    'corn': 1,
-    'tomato':0.7
+
 }
 
 SALE_PRICES = {
     'wood': 4,
     'apple': 2,
-    'corn': 10,
-    'tomato': 20
+
 }
 
 PURCHASE_PRICES = {
-    'corn': 4,
-    'tomato': 5
+
 }
+
+for plant in PLANT_TYPES:
+    line = plants.readline().split(',')
+    print(line)
+    GROW_SPEED[plant] = float(line[1])
+    SALE_PRICES[plant] = int(line[2])
+    PURCHASE_PRICES[plant] = int(line[3])
+
+
+print(PURCHASE_PRICES)
+
+
+

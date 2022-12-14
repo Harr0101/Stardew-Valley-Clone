@@ -1,0 +1,4 @@
+corn,1,10,4
+tomato,0.7,20,5
+
+name,grow_speed,sale_price,seed_purchase_price

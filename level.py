@@ -195,7 +195,7 @@ class CameraGroup(pygame.sprite.Group):
 
 class Time():
     def __init__(self,level):
-        self.time = 4.8
+        self.time = 6
         self.font = pygame.font.SysFont('Times New Roman',18)
         self.z = LAYERS['overlay']
         self.level = level

@@ -39,21 +39,19 @@ class Player(pygame.sprite.Sprite):
         self.selected_tool = self.tools[self.tool_index]
 
         # Seeds
-        self.seeds = ['corn','tomato']
+        self.seeds = PLANT_TYPES.copy()
         self.seed_index = 0
         self.selected_seed = self.seeds[self.seed_index]
 
         # Inventory
         self.item_inventory = {
             'wood': 0,
-            'apple': 0,
-            'corn': 0,
-            'tomato': 0
+            'apple': 0
         }
-        self.seed_inventory= {
-            'corn': 5,
-            'tomato': 5
-        }
+        self.item_inventory.update({seed:0 for seed in PLANT_TYPES})
+
+        self.seed_inventory = {seed:5 for seed in PLANT_TYPES}
+
         self.money = 200
 
         # Interaction
