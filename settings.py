@@ -58,13 +58,10 @@ PURCHASE_PRICES = {
 
 for plant in PLANT_TYPES:
     line = plants.readline().split(',')
-    print(line)
     GROW_SPEED[plant] = float(line[1])
     SALE_PRICES[plant] = int(line[2])
     PURCHASE_PRICES[plant] = int(line[3])
 
-
-print(PURCHASE_PRICES)
 
 
 
